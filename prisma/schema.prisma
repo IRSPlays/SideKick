@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notes     Note[]
+  chats     ChatMessage[]
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  title     String
+  content   String   // Store HTML or JSON content from Tiptap
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  flashcards Flashcard[]
+  quizzes    Quiz[]
+}
+
+model Flashcard {
+  id         String   @id @default(cuid())
+  front      String
+  back       String
+
+  // Spaced Repetition fields
+  nextReview DateTime @default(now())
+  interval   Int      @default(0) // in days
+  easeFactor Float    @default(2.5)
+  repetitions Int     @default(0)
+
+  noteId     String?
+  note       Note?    @relation(fields: [noteId], references: [id], onDelete: Cascade)
+}
+
+model Quiz {
+  id        String   @id @default(cuid())
+  title     String
+  questions String   // Stored as JSON string
+
+  noteId    String?
+  note      Note?    @relation(fields: [noteId], references: [id], onDelete: Cascade)
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  role      String   // "user" or "model"
+  content   String
+  createdAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
