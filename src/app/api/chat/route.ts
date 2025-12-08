@@ -28,7 +28,7 @@ export async function POST(req: Request) {
         select: { title: true, content: true }
     });
 
-    const contextText = recentNotes.map(n => `Title: ${n.title}\nContent: ${n.content}`).join("\n---\n");
+    const contextText = recentNotes.map((n: { title: string; content: string }) => `Title: ${n.title}\nContent: ${n.content}`).join("\n---\n");
 
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
