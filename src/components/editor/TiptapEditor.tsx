@@ -74,29 +74,29 @@ export default function TiptapEditor({ content = "", onChange, editable = true }
   };
 
   return (
-    <div className="relative border border-slate-200 rounded-lg p-4 bg-white shadow-sm min-h-[600px]">
+    <div className="relative border border-slate-200/60 rounded-xl p-6 bg-white/80 shadow-sm min-h-[600px] backdrop-blur-sm">
       {editable && (
         <BubbleMenu
           editor={editor}
           // @ts-expect-error - tippyOptions are valid but types might be mismatching in this version
           tippyOptions={{ duration: 100 }}
-          className="flex bg-white shadow-lg border border-slate-200 rounded-lg overflow-hidden divide-x divide-slate-200"
+          className="flex bg-slate-900 shadow-2xl border border-white/10 rounded-lg overflow-hidden divide-x divide-white/10"
         >
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
-            className={`p-2 hover:bg-slate-50 ${editor.isActive("bold") ? "text-emerald-600 bg-emerald-50" : "text-slate-600"}`}
+            className={`p-2 hover:bg-white/10 ${editor.isActive("bold") ? "text-teal-400" : "text-slate-300"}`}
           >
             <Bold size={16} />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={`p-2 hover:bg-slate-50 ${editor.isActive("italic") ? "text-emerald-600 bg-emerald-50" : "text-slate-600"}`}
+            className={`p-2 hover:bg-white/10 ${editor.isActive("italic") ? "text-teal-400" : "text-slate-300"}`}
           >
             <Italic size={16} />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleStrike().run()}
-            className={`p-2 hover:bg-slate-50 ${editor.isActive("strike") ? "text-emerald-600 bg-emerald-50" : "text-slate-600"}`}
+            className={`p-2 hover:bg-white/10 ${editor.isActive("strike") ? "text-teal-400" : "text-slate-300"}`}
           >
             <Strikethrough size={16} />
           </button>
@@ -104,14 +104,14 @@ export default function TiptapEditor({ content = "", onChange, editable = true }
              <button
                 onClick={() => handleAiCommand("explain")}
                 disabled={isAiLoading}
-                className="p-2 hover:bg-purple-50 text-purple-600 flex items-center gap-1 text-xs font-medium"
+                className="p-2 hover:bg-white/10 text-purple-400 flex items-center gap-1 text-xs font-medium"
               >
                 <Wand2 size={14} /> Explain
              </button>
              <button
                 onClick={() => handleAiCommand("summarize")}
                 disabled={isAiLoading}
-                className="p-2 hover:bg-blue-50 text-blue-600 text-xs font-medium"
+                className="p-2 hover:bg-white/10 text-blue-400 text-xs font-medium"
               >
                 Summarize
              </button>
@@ -124,23 +124,23 @@ export default function TiptapEditor({ content = "", onChange, editable = true }
           editor={editor}
           // @ts-expect-error - tippyOptions are valid but types might be mismatching in this version
           tippyOptions={{ duration: 100 }}
-          className="flex bg-white shadow-lg border border-slate-200 rounded-lg overflow-hidden divide-x divide-slate-200"
+          className="flex bg-slate-900 shadow-2xl border border-white/10 rounded-lg overflow-hidden divide-x divide-white/10"
         >
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-            className={`p-2 hover:bg-slate-50 ${editor.isActive("heading", { level: 1 }) ? "text-emerald-600" : "text-slate-600"}`}
+            className={`p-2 hover:bg-white/10 ${editor.isActive("heading", { level: 1 }) ? "text-teal-400" : "text-slate-300"}`}
           >
             <Heading1 size={16} />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-            className={`p-2 hover:bg-slate-50 ${editor.isActive("heading", { level: 2 }) ? "text-emerald-600" : "text-slate-600"}`}
+            className={`p-2 hover:bg-white/10 ${editor.isActive("heading", { level: 2 }) ? "text-teal-400" : "text-slate-300"}`}
           >
             <Heading2 size={16} />
           </button>
           <button
             onClick={() => editor.chain().focus().toggleBulletList().run()}
-            className={`p-2 hover:bg-slate-50 ${editor.isActive("bulletList") ? "text-emerald-600" : "text-slate-600"}`}
+            className={`p-2 hover:bg-white/10 ${editor.isActive("bulletList") ? "text-teal-400" : "text-slate-300"}`}
           >
             <List size={16} />
           </button>

@@ -17,11 +17,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname();
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
+    <div className="min-h-screen bg-pattern-sg flex">
       {/* Sidebar */}
-      <div className="fixed inset-y-0 left-0 w-64 bg-white border-r border-slate-200 hidden md:flex flex-col">
-        <div className="flex items-center h-16 px-6 border-b border-slate-200">
-          <span className="text-xl font-bold text-emerald-700 tracking-tight">SG Notes</span>
+      <div className="fixed inset-y-0 left-0 w-64 bg-slate-900/95 backdrop-blur-xl border-r border-white/10 hidden md:flex flex-col shadow-2xl z-20">
+        <div className="flex items-center h-16 px-6 border-b border-white/10">
+          <span className="text-xl font-display font-bold text-teal-400 tracking-tight">SG Notes</span>
         </div>
 
         <nav className="flex-1 px-4 py-4 space-y-1">
@@ -31,23 +31,23 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <Link
                 key={item.name}
                 href={item.href}
-                className={`flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all ${
                   isActive
-                    ? "bg-emerald-50 text-emerald-700"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    ? "bg-teal-500/20 text-teal-300 border border-teal-500/30 shadow-lg shadow-teal-500/10"
+                    : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
                 }`}
               >
-                <item.icon className={`mr-3 h-5 w-5 ${isActive ? "text-emerald-700" : "text-slate-400"}`} />
+                <item.icon className={`mr-3 h-5 w-5 ${isActive ? "text-teal-300" : "text-slate-500"}`} />
                 {item.name}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-slate-200">
+        <div className="p-4 border-t border-white/10">
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
-            className="flex items-center w-full px-4 py-2 text-sm font-medium text-red-600 rounded-md hover:bg-red-50 transition-colors"
+            className="flex items-center w-full px-4 py-2 text-sm font-medium text-red-400 rounded-xl hover:bg-red-400/10 transition-colors"
           >
             <LogOut className="mr-3 h-5 w-5" />
             Sign Out
@@ -57,7 +57,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Main Content */}
       <div className="flex-1 md:ml-64 flex flex-col min-h-screen">
-        <main className="flex-1 p-8">
+        <main className="flex-1 p-8 overflow-y-auto">
           {children}
         </main>
       </div>
