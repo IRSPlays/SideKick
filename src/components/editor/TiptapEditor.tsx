@@ -30,6 +30,7 @@ export default function TiptapEditor({ content = "", onChange, editable = true }
     ],
     content,
     editable,
+    immediatelyRender: false,
     onUpdate: ({ editor }) => {
       onChange?.(editor.getHTML());
     },

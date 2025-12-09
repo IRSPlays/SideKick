@@ -39,10 +39,36 @@ export async function POST(req: Request) {
       user: { id: user.id, name: user.name, email: user.email },
     });
   } catch (error) {
+    console.error("Registration error:", error);
+    
     if (error instanceof z.ZodError) {
-      // @ts-expect-error - Zod types are weird with Next.js Response
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json(
+        { error: "Validation failed", details: error.issues },
+        { status: 400 }
+      );
     }
+    
+    // Log the actual error for debugging
+    if (error instanceof Error) {
+      console.error("Error details:", {
+        message: error.message,
+        stack: error.stack,
+        name: error.name,
+      });
+      
+      // Return more specific error messages in development
+      if (process.env.NODE_ENV === 'development') {
+        return NextResponse.json(
+          { 
+            error: "Registration failed", 
+            details: error.message,
+            hint: "Check server logs for more details"
+          },
+          { status: 500 }
+        );
+      }
+    }
+    
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

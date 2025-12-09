@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut, BookOpen, MessageSquare, PenTool, LayoutDashboard, Library } from "lucide-react";
+import { LogOut, BookOpen, MessageSquare, PenTool, LayoutDashboard, Library, Brain } from "lucide-react";
 import { signOut } from "next-auth/react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "AI Study Hub", href: "/dashboard/study-hub", icon: Brain },
   { name: "My Notes", href: "/dashboard/notes", icon: BookOpen },
   { name: "Write New", href: "/dashboard/notes/new", icon: PenTool },
   { name: "Community Library", href: "/dashboard/library", icon: Library },

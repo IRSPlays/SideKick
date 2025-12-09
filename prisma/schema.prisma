@@ -18,14 +18,19 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  notes     Note[]
-  chats     ChatMessage[]
+  notes        Note[]
+  chats        ChatMessage[]
+  quizAttempts QuizAttempt[]
+  exams        Exam[]
+  examAttempts ExamAttempt[]
 }
 
 model Note {
   id        String   @id @default(cuid())
   title     String
   content   String   // Store HTML or JSON content from Tiptap
+  subject   String?  // Math, Science, History, etc.
+  tags      String?  // JSON array of tags
   isPublic  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -35,6 +40,7 @@ model Note {
 
   flashcards Flashcard[]
   quizzes    Quiz[]
+  exams      Exam[]
 }
 
 model Flashcard {
@@ -50,15 +56,74 @@ model Flashcard {
 
   noteId     String?
   note       Note?    @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  
+  reviews    FlashcardReview[]
+}
+
+model FlashcardReview {
+  id           String   @id @default(cuid())
+  rating       Int      // 1-5 rating
+  createdAt    DateTime @default(now())
+  
+  flashcardId  String
+  flashcard    Flashcard @relation(fields: [flashcardId], references: [id], onDelete: Cascade)
 }
 
 model Quiz {
   id        String   @id @default(cuid())
   title     String
   questions String   // Stored as JSON string
+  createdAt DateTime @default(now())
 
   noteId    String?
   note      Note?    @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  
+  attempts  QuizAttempt[]
+}
+
+model QuizAttempt {
+  id          String   @id @default(cuid())
+  answers     String   // JSON string of user answers
+  score       Float
+  feedback    String   // AI-generated feedback
+  createdAt   DateTime @default(now())
+  
+  quizId      String
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Exam {
+  id          String   @id @default(cuid())
+  title       String
+  subject     String
+  difficulty  String   // easy, medium, hard
+  questions   String   // JSON string of questions
+  createdAt   DateTime @default(now())
+  
+  noteId      String?
+  note        Note?    @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  attempts    ExamAttempt[]
+}
+
+model ExamAttempt {
+  id          String   @id @default(cuid())
+  answers     String   // JSON string of user answers
+  score       Float
+  feedback    String   // AI-generated feedback per question
+  createdAt   DateTime @default(now())
+  
+  examId      String
+  exam        Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model ChatMessage {
